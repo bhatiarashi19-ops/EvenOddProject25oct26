@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Even Odd App</title>
+    <style>
+        /* Centers everything on the screen nicely */
+        body { 
+            background-color: #f0f8ff; /* Soft azure background */
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Creates a neat card container for your app */
+        .app-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 320px;
+        }
+
+        h1 {
+            color: #333;
+            margin-top: 0;
+            font-size: 28px;
+        }
+
+        /* Makes the input fields large and easy to read */
+        input[type="number"] {
+            width: 90%;
+            padding: 10px;
+            font-size: 18px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            outline: none;
+        }
+
+        /* Styles the button to look modern */
+        input[type="submit"] {
+            width: 98%;
+            padding: 12px;
+            font-size: 18px;
+            background-color: #007bff; /* Nice blue color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Changes button color slightly when hovered */
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* Styles the result text */
+        h2 {
+            margin-top: 20px;
+            font-size: 22px;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <h1>Even Odd App</h1>
+        
+        <form onsubmit="check(event)">
+            <input type="number" id="num" placeholder="Enter Integer">
+            <input type="submit" value="Check Even / Odd">
+        </form>
+        
+        <h2 id="msg"></h2>
+    </div>
+
+    <script>
+        function check(event) {
+            event.preventDefault();
+            
+            let num = document.getElementById("num");
+            let msg = document.getElementById("msg");
+            
+            if (num.value === "") {
+                alert("Please enter an integer");
+                msg.textContent = "";
+                num.focus();
+                return;
+            }
+            
+            let n = parseInt(num.value);
+            let url = "https://evenodd25oct26-118z.onrender.com/check/" + n;
+            
+            // Showing a loading state while fetching data
+            msg.textContent = "Checking...";
+            
+            fetch(url)
+                .then(res => res.text())
+                .then(data => {
+                    msg.textContent = data;
+                })
+                .catch(err => {
+                    console.log(err);
+                    msg.textContent = "Issue: " + err;
+                });
+        }
+    </script>
+</body>
+</html>
